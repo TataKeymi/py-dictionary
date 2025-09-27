@@ -31,7 +31,7 @@ class Dictionary:
                 new_buckets[node_index].append(node)
         self.buckets = new_buckets
 
-    def _find_node(self, bucket: list[Node], key: int,
+    def _find_node(self, bucket: list[Node], key: Hashable,
                    key_hash: int) -> tuple | None:
         for index, node in enumerate(bucket):
             if node.key_hash == key_hash and node.key == key:
@@ -65,7 +65,7 @@ class Dictionary:
         if found is not None:
             _, node = found
             return node.value
-        raise KeyError
+        raise KeyError(f"Key not found: {key}")
 
     def __len__(self) -> int:
         return self.size

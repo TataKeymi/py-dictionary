@@ -4,7 +4,7 @@ from typing import Hashable, Any
 class Node:
     def __init__(self, key: Hashable, key_hash: int, value: Any) -> None:
         self.key = key
-        self.key_hash = key_hash
+        self.hash = key_hash
         self.value = value
 
 
@@ -27,14 +27,14 @@ class Dictionary:
         new_buckets = [[] for _ in range(self.capacity)]
         for nodes in self.buckets:
             for node in nodes:
-                node_index = self._index(node.key_hash)
+                node_index = self._index(node.hash)
                 new_buckets[node_index].append(node)
         self.buckets = new_buckets
 
     def _find_node(self, bucket: list[Node], key: Hashable,
                    key_hash: int) -> tuple | None:
         for index, node in enumerate(bucket):
-            if node.key_hash == key_hash and node.key == key:
+            if node.hash == key_hash and node.key == key:
                 return (index, node)
         return None
 
